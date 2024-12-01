@@ -1,0 +1,21 @@
+server:
+  port: 8080
+
+spring:
+  application:
+    name: ead-api-gateway
+  output:
+    ansi:
+      enabled: Always
+  cloud:
+    gateway:
+      mvc:
+        routes:
+          - id: authuser-service
+            uri: http://localhost:8087/
+            predicates:
+              - Path=/ead-authuser/**
+          - id: course-service
+            uri: http://localhost:8082/
+            predicates:
+              - Path=/ead-course/**
