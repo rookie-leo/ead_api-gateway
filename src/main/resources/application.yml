@@ -1,34 +1,9 @@
-server:
-  port: 8080
-
 spring:
   application:
     name: ead-api-gateway
-  output:
-    ansi:
-      enabled: Always
+  config:
+    import: 'optional:configserver:'
   cloud:
-    gateway:
-      mvc:
-        routes:
-          - id: authuser-service
-            uri: lb://EAD-AUTHUSER-SERVICE
-            predicates:
-              - Path=/ead-authuser/**
-          - id: course-service
-            uri: lb://EAD-COURSE-SERVICE
-            predicates:
-              - Path=/ead-course/**
-logging:
-  level:
-    com.ead: TRACE
-    root: INFO
-    org.springframework.web: DEBUG
-    org.hibernate: INFO
-
-eureka:
-  client:
-    serviceUrl:
-      defaultZone: 'http://localhost:8761/eureka'
-  instance:
-    hostname: localhost
+    config:
+      discovery:
+        serviceId: ead-config-server
